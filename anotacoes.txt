@@ -1,0 +1,9 @@
+-> Fazer as coisas com mais funçoes pra ramificar mais, pois funçoes de print com
+    com 3 linhs seguindo os mesmos padroes nao fica bom 
+
+
+-> Parametrizar tudo no codigo, nao pode ter nada estatico no codigo 
+
+->(minha) mudar para portugues o codigo pra que possa ficar mais legivel
+
+-> fazer tudo no mesmo arquivo py, pra que nao fique aquela coisa ruim de ficar mudando arquivo

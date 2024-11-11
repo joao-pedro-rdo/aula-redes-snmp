@@ -1,0 +1,46 @@
+services:
+  tcp-server:
+    build:
+      context: ./tcp-server
+    ports:
+      - "8080:8080"
+    networks:
+      my-network:
+        ipv4_address: 10.5.0.2
+    tty: true
+
+  tcp-client:
+    build:
+      context: ./tcp-client
+    depends_on:
+      - tcp-server
+    # Para exibir qual conexão está sendo feita no momento usar --verbose
+    command: ["python", "tcp-client.py", "--host", "10.5.0.2", "--porta", "8080", "--requisicao", "100000",--comando, "GETNEXT" ,"--session", "--log", "performance.log"]
+    networks:
+      my-network:
+        ipv4_address: 10.5.0.3
+
+  # udp-server:
+  #   build:
+  #     context: ./udp-server
+  #   ports:
+  #     - "8081:8081/udp"
+  #   networks:
+  #     my-network:
+  #       ipv4_address: 10.5.0.4
+
+  # udp-client:
+  #   build:
+  #     context: ./udp-client
+  #   depends_on:
+  #     - udp-server
+  #   networks:
+  #     my-network:
+  #       ipv4_address: 10.5.0.5
+
+networks:
+  my-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
