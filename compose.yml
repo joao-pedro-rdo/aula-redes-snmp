@@ -1,0 +1,17 @@
+version: '3'
+services:
+  snmp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.snmp-server
+    ports:
+      - "161:161/udp"
+
+  snmp-client:
+    build:
+      context: .
+      dockerfile: Dockerfile.snmp-client
+    depends_on:
+      - snmp-server
+    volumes:
+      - "./:/app"  # Mapeia a pasta local 'resultados_snmp' para o diretório '/app' no contêiner

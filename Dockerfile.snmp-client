@@ -1,0 +1,12 @@
+# Dockerfile.snmp-client
+FROM ubuntu:latest
+
+# Instala o cliente SNMP
+RUN apt update && apt install -y snmp
+
+# Copia o script de consulta SNMP
+COPY snmp_query.sh /app/snmp_query.sh
+WORKDIR /app
+
+# Define o script como ponto de entrada
+CMD ["bash", "snmp_query.sh"]

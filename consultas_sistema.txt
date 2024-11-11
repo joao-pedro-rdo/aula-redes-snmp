@@ -1,0 +1,9 @@
+Realizando consultas SNMP ao servidor snmp-server para informações do sistema...
+Descrição do sistema: "Linux 157b59b6cec0 6.8.0-48-generic #48-Ubuntu SMP PREEMPT_DYNAMIC Fri Sep 27 14:04:52 UTC 2024 x86_64"
+Tempo de atividade do sistema: (57) 0:00:00.57
+Modelo da CPU: 
+Carga média do CPU: "11.96"
+Memória total: 15891 MB
+Memória disponível: 9559 MB
+Memória em uso: 6332 MB
+Processos em execução: 1

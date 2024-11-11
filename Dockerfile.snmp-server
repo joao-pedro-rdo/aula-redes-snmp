@@ -1,0 +1,11 @@
+# Dockerfile.snmp-server
+FROM ubuntu:latest
+
+# Instala o agente SNMP (servidor)
+RUN apt update && apt install -y snmpd
+
+# Copia o arquivo de configuração
+COPY snmpd.conf /etc/snmp/snmpd.conf
+
+# Configura o serviço para rodar no modo foreground (necessário para Docker)
+CMD ["/usr/sbin/snmpd", "-f", "-Le"]
