@@ -34,34 +34,49 @@ def close_connection(sock):
 
 
 # Função para executar múltiplas requisições ao servidor
-def execute_requests(host, port, num_requests, session, verbose, command):
+def execute_requests(host, port, num_requests, session, verbose, command, keep):
+
     times = []  # Lista para armazenar os tempos de resposta
-    sock = create_connection(host, port, session) if session else None
     command = " ".join(command)
-    for _ in range(num_requests):
-        start_time = time.time()  # Marca o tempo de início
+    if keep == 1:
+        sock = create_connection(host, port, session) if session else None
+        for _ in range(num_requests):
+            start_time = time.time()  # Marca o tempo de início
 
-        if sock:
-                
+            if sock:
 
-            response = send_request(sock, command)  # Envia o comando especificado
-            if verbose:
-                print(
-                    f"resposta: {response}"
-                )  # Imprime a resposta se o modo verbose estiver ativado
+                response = send_request(sock, command)  # Envia o comando especificado
+                if verbose:
+                    print(
+                        f"resposta: {response}"
+                    )  # Imprime a resposta se o modo verbose estiver ativado
 
-            times.append(
-                time.time() - start_time
-            )  # Calcula e armazena o tempo de resposta
-            if not session:
-                close_connection(
-                    sock
-                )  # Fecha a conexão se a sessão não for persistente
+                times.append(
+                    time.time() - start_time
+                )  # Calcula e armazena o tempo de resposta
+                if not session:
+                    close_connection(
+                        sock
+                    )  # Fecha a conexão se a sessão não for persistente
 
-    if session:
-        close_connection(sock)  # Fecha a conexão se a sessão for persistente
+        if session:
+            close_connection(sock)  # Fecha a conexão se a sessão for persistente
 
-    return times  # Retorna a lista de tempos de resposta
+        return times  # Retorna a lista de tempos de resposta
+    elif keep == 0:
+        for _ in range(num_requests):
+            start_time = time.time()
+            sock = create_connection(host, port, session) if session else None
+            if sock:
+                response = send_request(sock, command)  # Envia o comando especificado
+                if verbose:
+                    print(f"resposta: {response}")
+                times.append(
+                    time.time() - start_time
+                )  # Calcula e armazena o tempo de resposta
+            if session:
+                close_connection(sock)  # Fecha a conexão se a sessão for persistente
+        return times  # Retorna a lista de tempos de resposta
 
 
 # Função para medir o tempo total de execução com estatísticas detalhadas
@@ -137,7 +152,9 @@ def parse_arguments():
         nargs="+",
         default="GET",
         help="Comando a ser enviado ao servidor",
-    )  # Novo parâmetro
+    )
+    parser.add_argument("--keep", default=1, type=int)
+
     return parser.parse_args()  # Retorna os argumentos analisados
 
 
@@ -145,7 +162,13 @@ def parse_arguments():
 if __name__ == "__main__":
     args = parse_arguments()  # Analisa os argumentos da linha de comando
     times = execute_requests(
-        args.host, args.port, args.requests, args.session, args.verbose, args.command
+        args.host,
+        args.port,
+        args.requests,
+        args.session,
+        args.verbose,
+        args.command,
+        args.keep,
     )  # Executa as requisições
     stats = log_performance(times, args.log)  # Registra o tempo total de execução
-    print(json.dumps(stats)) # Imprime as estatísticas como dicionário
+    print(json.dumps(stats))  # Imprime as estatísticas como dicionário

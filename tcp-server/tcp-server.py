@@ -10,9 +10,10 @@ system_info = {
     5: "Network: Ethernet 1000 Mbps",
 }
 
+
 # Função que trata a conexão de cada cliente
 def handle_client_connection(client_socket, addr):
-    print(f"Connection from {addr}")  # Exibe o endereço do cliente conectado
+    # print(f"Connection from {addr}")  # Exibe o endereço do cliente conectado
     try:
         while True:
             # Recebe os dados enviados pelo cliente e trasforma de bytes para strings
