@@ -13,7 +13,7 @@ services:
       context: ./udp-client
     depends_on:
       - udp-server
-    command: ["python", "udp-client.py", "--host", "10.5.0.4", "--port", "8080", "--requests", "100000", "--command", "GET", "--verbose"]
+    command: ["python", "udp-client.py", "--host", "10.5.0.4", "--port", "8080", "--requests", "1000", "--command", "SNMPGET 0", --verbose,]
     networks:
       my-network:
         ipv4_address: 10.5.0.5
@@ -25,3 +25,6 @@ networks:
     ipam:
       config:
         - subnet: 10.5.0.0/16
+
+
+--host 10.5.0.4 --port 8080 --requests 1000 --command SNMPGET 0 --verbose

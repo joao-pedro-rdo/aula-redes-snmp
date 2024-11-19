@@ -1,13 +1,21 @@
 import socket
 import argparse
 
+system_info = {
+    0: "Name: Computador Simuladnmo",
+    1: "CPU: Intel Core i7-9700K",
+    2: "Memory: 16GB DDR4",
+    3: "Disk: 512GB SSD",
+    4: "OS: Ubuntu 20.04",
+    5: "Network: Ethernet 1000 Mbps",
+}
 
 # Função que trata a conexão de cada cliente
 def handle_client_connection(client_socket, addr):
     print(f"Connection from {addr}")  # Exibe o endereço do cliente conectado
     try:
         while True:
-            # Recebe os dados enviados pelo cliente
+            # Recebe os dados enviados pelo cliente e trasforma de bytes para strings
             data = client_socket.recv(1024).decode()
             if not data:
                 break
@@ -24,27 +32,66 @@ def handle_client_connection(client_socket, addr):
 
 # Função que processa o comando enviado pelo cliente
 def process_request(data):
-    # Se o comando recebido for "PING", responde com "PONG"
-    if data.strip().upper() == "GET":
-        return "SIMULACAO SNMP"
+    # Inicializa response com uma mensagem padrão
+    response = "Comando não reconhecido"
 
-    # Comando simulado "GETNEXT" para retornar informações do sistema
-    elif data.strip().upper() == "GETNEXT":
-        # Dados fictícios para simular informações do sistema
-        system_info = {
-            "CPU": "Intel Core i7-9700K",
-            "Memory": "16GB DDR4",
-            "Disk": "512GB SSD",
-            "OS": "Ubuntu 20.04",
-            "Network": "Ethernet 1000 Mbps",
-        }
+    # Divide a entrada em partes
+    parts = data.strip().split()
+    if not parts:
+        return "Erro: Nenhum comando enviado"
 
+    # O primeiro elemento é o comando principal
+    command = parts[0].upper()  # Comando em maiúsculas
+
+    if command == "INFO":
+        return "Computador Simulado"
+
+    elif command == "SNMPGET":
+        # Retorna o valor de um OID em system_info
+        response = process_snmpget(parts)
+
+    elif command == "SNMPSET":
+        # Altera o valor de um OID em system_info
+        response = process_snmpset(parts)
+
+    elif command == "SNMPWALK":
         # Converte o dicionário em uma string formatada para enviar ao cliente
         response = "\n".join([f"{key}: {value}" for key, value in system_info.items()])
-        return response
 
-    # Caso contrário, apenas retorna uma mensagem com o conteúdo recebido
-    return f"Received: {data}"
+    return response
+
+
+def process_snmpget(parts):
+    # Verifica se o comando contém o argumento necessário
+    if len(parts) != 2:
+        return "Erro: Comando SNMPGET inválido. Use: SNMPGET <indice>"
+
+    try:
+        snmp_identifier = int(parts[1])  # Converte o índice para inteiro
+        return system_info.get(snmp_identifier, "Erro: Índice não encontrado")
+    except ValueError:
+        return "Erro: Índice inválido. Deve ser um número inteiro."
+
+
+def process_snmpset(parts):
+    # Verifica se o comando contém os argumentos necessários
+    if len(parts) != 3:
+        return "Erro: Comando SNMPSET inválido. Use: SNMPSET <indice> <novo_valor>"
+
+    try:
+        snmp_identifier = int(parts[1])  # Índice
+        snmp_value = parts[2]  # Novo valor
+        system_info[snmp_identifier] = snmp_value  # Atualiza o valor no dicionário
+        return "Valor alterado com sucesso"
+    except ValueError:
+        return "Erro: Índice inválido. Deve ser um número inteiro."
+
+
+def set_snmp_value(snmp_indentifier, snmp_value):
+    if snmp_indentifier in system_info:
+        system_info[snmp_indentifier] = snmp_value
+    else:
+        return f"Erro: O índice {snmp_indentifier} não existe no dicionário."
 
 
 # Função principal para iniciar o servidor TCP
