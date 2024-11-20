@@ -11,6 +11,7 @@ system_info = {
     5: "Network: Ethernet 1000 Mbps",
 }
 
+
 # Função que processa o comando enviado pelo cliente
 def process_request(data):
     # Inicializa a resposta padrão
@@ -81,9 +82,13 @@ def start_udp_server(host, port):
 
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description="Servidor UDP para processar comandos.")
-    parser.add_argument("--host", type=str, default="0.0.0.0", help="Endereço do servidor")
-    parser.add_argument("--port", type=int, default=8080, help="Porta do servidor")
+    parser = argparse.ArgumentParser(
+        description="Servidor UDP para processar comandos."
+    )
+    parser.add_argument(
+        "--host", type=str, default="0.0.0.0", help="Endereço do servidor"
+    )
+    parser.add_argument("--port", type=int, default=8081, help="Porta do servidor")
     return parser.parse_args()
 
 

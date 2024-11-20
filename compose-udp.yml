@@ -1,27 +1,13 @@
 services:
-  udp-server:
-    build:
-      context: ./udp-server
-    ports:
-      - "8081:8081/udp"  # Garanta que a porta está configurada corretamente para UDP
-    networks:
-      my-network:
-        ipv4_address: 10.5.0.4
-    tty: true
   udp-client:
     build:
       context: ./udp-client
-    depends_on:
-      - udp-server
-    command: ["python", "udp-client.py", "--host", "10.5.0.4", "--port", "8080", "--requests", "1000", "--command", "SNMPGET 0"]
+    command: ["python", "udp-client.py", "--host", "10.5.0.4", "--port", "8081", "--requests", "1000", "--command", "SNMPGET 0"]
     networks:
-      my-network:
+      aula-redes-snmp_my-network:
         ipv4_address: 10.5.0.5
     tty: true
 
 networks:
-  my-network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.5.0.0/16
+  aula-redes-snmp_my-network:
+    external: true

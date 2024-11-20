@@ -1,0 +1,26 @@
+services:
+  tcp-server:
+    build:
+      context: ./tcp-server
+    ports:
+      - "8080:8080"
+    networks:
+      my-network:
+        ipv4_address: 10.5.0.2
+    tty: true
+  udp-server:
+    build:
+      context: ./udp-server
+    ports:
+      - "8081:8081/udp"
+    networks:
+      my-network:
+        ipv4_address: 10.5.0.4
+    tty: true
+
+networks:
+  my-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16

@@ -88,13 +88,6 @@ def process_snmpset(parts):
         return "Erro: Índice inválido. Deve ser um número inteiro."
 
 
-def set_snmp_value(snmp_indentifier, snmp_value):
-    if snmp_indentifier in system_info:
-        system_info[snmp_indentifier] = snmp_value
-    else:
-        return f"Erro: O índice {snmp_indentifier} não existe no dicionário."
-
-
 # Função principal para iniciar o servidor TCP
 def start_tcp_server(host, port):
     # Cria um socket TCP (AF_INET para IPv4 e SOCK_STREAM para TCP)
