@@ -8,6 +8,9 @@ from generate_graphics import genrate_praphics
 # * É necessario levantar o seridor docker antes de executar o script
 # *  docker compose -f compose-server.yml run tcp-server
 
+#! python main_script.py --compose_file compose-tcp.yml --service tcp-client --script tcp-client.py --host 127.0.0.1 --port 8080 --requests 1000 --command SNMPWALK --log performance.log --keep 1 --output_file resultados.csv
+#! python3 main_script.py  --script tcp-client/tcp-client.py --host localhost --port 8080 --requests 1000 --command SNMPWALK --log performance.log --keep 0 --output_file resultados.csv
+
 
 def execute_docker_compose(
     compose_file,
