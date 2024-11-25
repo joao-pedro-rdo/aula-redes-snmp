@@ -112,9 +112,9 @@ def log_performance(times, log_file=None):
     }
 
     # Imprime as estatísticas formatadas
-    print("Performance statistics (in milliseconds):")
-    for key, value in stats.items():
-        print(f"{key}: {value} ms")
+    # print("Performance statistics (in milliseconds):")
+    # for key, value in stats.items():
+    #    print(f"{key}: {value} ms")
 
     # Salva as estatísticas em um arquivo, se especificado
     if log_file:

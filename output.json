@@ -1,0 +1,20 @@
+[
+    {
+        "indentifier": "10 SNMPWALK 1",
+        "stdout": "Performance statistics (in milliseconds):\ntempo_de_execucao_total_ms: 0.593 ms\ntempo_medio_ms: 0.059 ms\ntempo_minimo_ms: 0.043 ms\ntempo_maximo_ms: 0.097 ms\ndesvio_padrao_ms: 0.019 ms\n{\"tempo_de_execucao_total_ms\": 0.593, \"tempo_medio_ms\": 0.059, \"tempo_minimo_ms\": 0.043, \"tempo_maximo_ms\": 0.097, \"desvio_padrao_ms\": 0.019}",
+        "stderr": "time=\"2024-11-20T10:49:19-03:00\" level=warning msg=\"Found orphan containers ([aula-redes-snmp-tcp-client-run-e15095ad72ce aula-redes-snmp-tcp-client-run-ab60c7faee1c aula-redes-snmp-tcp-client-run-e2d57cdf36ee aula-redes-snmp-tcp-client-run-4f9546cd00d6 aula-redes-snmp-tcp-client-run-1479cf0defe5 aula-redes-snmp-tcp-client-run-d0f2496c4752 aula-redes-snmp-udp-client-run-ec024361ac31 aula-redes-snmp-udp-client-run-c3bc46ecdac9 aula-redes-snmp-udp-client-run-db53117e024f aula-redes-snmp-udp-server-1 aula-redes-snmp-tcp-server-1]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.\"",
+        "returncode": 0
+    },
+    {
+        "indentifier": "10 SNMPWALK 1",
+        "stdout": "Performance statistics (in milliseconds):\ntempo_de_execucao_total_ms: 0.509 ms\ntempo_medio_ms: 0.051 ms\ntempo_minimo_ms: 0.044 ms\ntempo_maximo_ms: 0.094 ms\ndesvio_padrao_ms: 0.015 ms\n{\"tempo_de_execucao_total_ms\": 0.509, \"tempo_medio_ms\": 0.051, \"tempo_minimo_ms\": 0.044, \"tempo_maximo_ms\": 0.094, \"desvio_padrao_ms\": 0.015}",
+        "stderr": "time=\"2024-11-20T10:50:15-03:00\" level=warning msg=\"Found orphan containers ([aula-redes-snmp-tcp-client-run-a786abf86429 aula-redes-snmp-tcp-client-run-e15095ad72ce aula-redes-snmp-tcp-client-run-ab60c7faee1c aula-redes-snmp-tcp-client-run-e2d57cdf36ee aula-redes-snmp-tcp-client-run-4f9546cd00d6 aula-redes-snmp-tcp-client-run-1479cf0defe5 aula-redes-snmp-tcp-client-run-d0f2496c4752 aula-redes-snmp-udp-client-run-ec024361ac31 aula-redes-snmp-udp-client-run-c3bc46ecdac9 aula-redes-snmp-udp-client-run-db53117e024f aula-redes-snmp-udp-server-1 aula-redes-snmp-tcp-server-1]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.\"",
+        "returncode": 0
+    },
+    {
+        "indentifier": "10 SNMPWALK 1",
+        "stdout": "{\"tempo_de_execucao_total_ms\": 0.641, \"tempo_medio_ms\": 0.064, \"tempo_minimo_ms\": 0.023, \"tempo_maximo_ms\": 0.149, \"desvio_padrao_ms\": 0.046}",
+        "stderr": "time=\"2024-11-20T10:51:34-03:00\" level=warning msg=\"Found orphan containers ([aula-redes-snmp-tcp-client-run-e3e65338dff6 aula-redes-snmp-tcp-client-run-a786abf86429 aula-redes-snmp-tcp-client-run-e15095ad72ce aula-redes-snmp-tcp-client-run-ab60c7faee1c aula-redes-snmp-tcp-client-run-e2d57cdf36ee aula-redes-snmp-tcp-client-run-4f9546cd00d6 aula-redes-snmp-tcp-client-run-1479cf0defe5 aula-redes-snmp-tcp-client-run-d0f2496c4752 aula-redes-snmp-udp-client-run-ec024361ac31 aula-redes-snmp-udp-client-run-c3bc46ecdac9 aula-redes-snmp-udp-client-run-db53117e024f aula-redes-snmp-udp-server-1 aula-redes-snmp-tcp-server-1]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.\"",
+        "returncode": 0
+    }
+]
