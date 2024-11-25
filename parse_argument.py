@@ -13,14 +13,14 @@ def get_argments():
     parser.add_argument(
         "--compose_file",
         # required=True,
-        default="compose-tcp.yml",
+        # default="compose-tcp.yml",
         type=str,
         help="Arquivo Docker Compose (ex: compose-tcp.yml)",
     )
     parser.add_argument(
         "--service",
         # required=True,
-        default="tcp-client",
+        # default="tcp-client",
         type=str,
         help="Serviço no Docker Compose (ex: tcp-client)",
     )
