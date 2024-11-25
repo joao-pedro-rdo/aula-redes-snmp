@@ -5,13 +5,8 @@ from parse_argument import get_argments
 from save_csv import save_csv
 from generate_graphics import genrate_praphics
 
-# * É necessario levantar o seridor docker antes de executar o script
-# *  docker compose -f compose-server.yml run tcp-server
 
-#! python main_script.py --compose_file compose-tcp.yml --service tcp-client --script tcp-client.py --host 127.0.0.1 --port 8080 --requests 1000 --command SNMPWALK --log performance.log --keep 1 --output_file resultados.csv
-#! python3 main_script.py  --script tcp-client/tcp-client.py --host localhost --port 8080 --requests 1000 --command SNMPWALK --log performance.log --keep 0 --output_file resultados.csv
-
-
+# Função para executar scripts usando Docker Compose
 def execute_docker_compose(
     compose_file,
     service,
@@ -22,6 +17,7 @@ def execute_docker_compose(
     command,
     session,
     log,
+    verbose,
     keep,
     output_file,
 ):
@@ -43,15 +39,15 @@ def execute_docker_compose(
         str(requests),
         "--command",
         command,
-        "--session" if session else "",
+        "--session" if session and script != "udp-client.py" else "",
         "--log",
         log,
+        "--verbose" if verbose else "",
         "--keep",
-        str(keep),
-        # "--remove-orphans",
+        str(keep) if script != "udp-client.py" else "",
     ]
 
-    # Remove argumentos vazios (caso `--session` seja opcional)
+    # Remove argumentos vazios
     docker_command = [arg for arg in docker_command if arg]
 
     try:
@@ -60,20 +56,22 @@ def execute_docker_compose(
 
         # Estrutura os resultados em um dicionário
         new_output = {
-            "indentifier": " ".join(["docker", str(requests), command, str(keep)]),
+            "indentifier": " ".join(["docker", str(requests), command]),
             "stdout": resultado.stdout.strip(),
             "stderr": resultado.stderr.strip(),
             "returncode": resultado.returncode,
         }
 
         save_csv(output_file, new_output)
+        print(new_output)
 
     except Exception as e:
-        print(f"Erro ao execute o comando: {e}")
+        print(f"Erro ao executar o comando Docker: {e}")
 
-    compose_down(args.compose_file)
+    compose_down(compose_file)
 
 
+# Função para executar scripts localmente
 def execute_local(
     script,
     host,
@@ -82,12 +80,10 @@ def execute_local(
     command,
     session,
     log,
+    verbose,
     keep,
     output_file,
 ):
-    """
-    Executa o script diretamente no ambiente local, sem Docker.
-    """
     # Monta o comando dinamicamente
     local_command = [
         "python3",
@@ -100,14 +96,15 @@ def execute_local(
         str(requests),
         "--command",
         command,
-        "--session" if session else "",
+        "--verbose" if verbose else "",
         "--log",
         log,
         "--keep",
-        str(keep),
+        str(keep) if script != "udp-client.py" else "",
+        "--session" if session and script != "udp-client.py" else "",
     ]
 
-    # Remove argumentos vazios (caso `--session` seja opcional)
+    # Remove argumentos vazios
     local_command = [arg for arg in local_command if arg]
 
     try:
@@ -116,18 +113,20 @@ def execute_local(
 
         # Estrutura os resultados em um dicionário
         new_output = {
-            "indentifier": " ".join(["local", str(requests), command, str(keep)]),
+            "indentifier": " ".join(["local", str(requests), command]),
             "stdout": resultado.stdout.strip(),
             "stderr": resultado.stderr.strip(),
             "returncode": resultado.returncode,
         }
 
         save_csv(output_file, new_output)
+        print(new_output)
 
     except Exception as e:
         print(f"Erro ao executar o comando local: {e}")
 
 
+# Função para desmontar serviços Docker Compose
 def compose_down(compose_file):
     subprocess.run(
         ["docker", "compose", "-f", compose_file, "down", "--remove-orphans"],
@@ -137,7 +136,6 @@ def compose_down(compose_file):
 
 
 if __name__ == "__main__":
-
     # Faz o parse dos argumentos
     args = get_argments()
 
@@ -153,10 +151,10 @@ if __name__ == "__main__":
             command=args.command,
             session=args.session,
             log=args.log,
+            verbose=args.verbose,
             keep=args.keep,
             output_file=args.output_file,
         )
-        compose_down(args.compose_file)
     else:  # Caso contrário, executa localmente
         execute_local(
             script=args.script,
@@ -166,9 +164,9 @@ if __name__ == "__main__":
             command=args.command,
             session=args.session,
             log=args.log,
+            verbose=args.verbose,
             keep=args.keep,
             output_file=args.output_file,
         )
-    #! FALTA O VERBOSE
 
-    genrate_praphics(args.output_file)  # TODO: Os graficos precisam ser melhorados
+    genrate_praphics(args.output_file)  # TODO: Melhoria nos gráficos

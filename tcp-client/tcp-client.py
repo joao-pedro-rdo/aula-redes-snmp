@@ -54,13 +54,8 @@ def execute_requests(host, port, num_requests, session, verbose, command, keep):
                 times.append(
                     time.time() - start_time
                 )  # Calcula e armazena o tempo de resposta
-                if not session:
-                    close_connection(
-                        sock
-                    )  # Fecha a conexão se a sessão não for persistente
 
-        if session:
-            close_connection(sock)  # Fecha a conexão se a sessão for persistente
+        close_connection(sock)  # Fecha a conexão se a sessão for persistente
 
         return times  # Retorna a lista de tempos de resposta
     elif keep == 0:
@@ -74,7 +69,6 @@ def execute_requests(host, port, num_requests, session, verbose, command, keep):
                 times.append(
                     time.time() - start_time
                 )  # Calcula e armazena o tempo de resposta
-            if session:
                 close_connection(sock)  # Fecha a conexão se a sessão for persistente
         return times  # Retorna a lista de tempos de resposta
 

@@ -10,3 +10,75 @@ indentifier,tempo_de_execucao_total_ms,tempo_medio_ms,tempo_minimo_ms,tempo_maxi
 1000 SNMPWALK 0,114.029,0.114,0.087,0.351,0.024,,0
 10000 SNMPWALK 0,1105.316,0.111,0.082,0.432,0.022,,0
 100000 SNMPWALK 0,,,,,,
+docker 10000 SNMPWALK,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+udp-client.py: error: unrecognized arguments: --keep",2
+local 10000 SNMPWALK,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+udp-client.py: error: unrecognized arguments: --keep None",2
+local 10000 SNMPWALK,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+udp-client.py: error: unrecognized arguments: --keep None",2
+local 10000 INFo,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+udp-client.py: error: unrecognized arguments: --keep None",2
+local 10000 INFO,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+udp-client.py: error: unrecognized arguments: --keep None",2
+local 10000 INFO,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+udp-client.py: error: unrecognized arguments: --keep 1",2
+local 10000 INFO,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+udp-client.py: error: unrecognized arguments: --keep 0",2
+local 10000 INFO,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+udp-client.py: error: unrecognized arguments: --keep 0 --session",2
+local 10000 INFO,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+udp-client.py: error: unrecognized arguments: --keep None --session",2
+local 10000 INFO,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+udp-client.py: error: unrecognized arguments: --keep None",2
+local 10000 INFO,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+udp-client.py: error: unrecognized arguments: --keep 1 --session",2
+local 10000 INFO,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+udp-client.py: error: unrecognized arguments: --keep 1 --session",2
+local 10000 INFO,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+                     [--keep KEEP] [--session SESSION]
+udp-client.py: error: argument --session: expected one argument",2
+local 10000 INFO,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+                     [--keep KEEP] [--session SESSION]
+udp-client.py: error: argument --session: expected one argument",2
+local 10000 INFO,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+                     [--keep KEEP] [--session SESSION]
+udp-client.py: error: argument --session: expected one argument",2
+local 10000 INFO,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+                     [--keep KEEP] [--session SESSION]
+udp-client.py: error: argument --session: expected one argument",2
+local 10000 INFO,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+                     [--keep KEEP] [--session SESSION]
+udp-client.py: error: argument --session: expected one argument",2
+local 10000 SNMPGET,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+                     [--keep KEEP] [--session SESSION]
+udp-client.py: error: argument --session: expected one argument",2
+local 10000 SNMPGET,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+                     [--keep KEEP] [--session SESSION]
+udp-client.py: error: argument --session: expected one argument",2
+local 10000 SNMPGET,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+                     [--keep KEEP] [--session SESSION]
+udp-client.py: error: argument --session: expected one argument",2
+local 10000 SNMPGET,,,,,,"usage: udp-client.py [-h] [--host HOST] [--port PORT] [--requests REQUESTS]
+                     [--verbose] [--log LOG] [--command COMMAND [COMMAND ...]]
+                     [--keep KEEP] [--session SESSION]
+udp-client.py: error: argument --session: expected one argument",2

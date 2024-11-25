@@ -67,6 +67,10 @@ def get_argments():
         help="Arquivo de log (ex: performance.log)",
     )
     parser.add_argument(
+        "--verbose",
+        help="Flag de manter conexões (0 - mantem a conexao ou 1 - fecha conexão a cada chamada)",
+    )
+    parser.add_argument(
         "--keep",
         required=True,
         type=int,
