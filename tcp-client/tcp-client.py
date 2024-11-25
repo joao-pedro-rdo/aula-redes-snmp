@@ -135,7 +135,7 @@ def parse_arguments():
     parser.add_argument(
         "--host", type=str, default="127.0.0.1", help="Endereço do servidor"
     )
-    parser.add_argument("--port", type=int, default=5000, help="Porta do servidor")
+    parser.add_argument("--port", type=int, default=8080, help="Porta do servidor")
     parser.add_argument(
         "--requests", type=int, default=10, help="Número de requisições"
     )

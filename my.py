@@ -1,6 +1,7 @@
 import subprocess
 import json
 import os
+from parse_argument import get_argments
 
 
 def executar_docker_compose_tcp(
@@ -39,6 +40,7 @@ def executar_docker_compose_tcp(
         log,
         "--keep",
         str(keep),
+        # "--remove-orphans",
     ]
 
     # Remove argumentos vazios (caso `--session` seja opcional)
@@ -60,6 +62,14 @@ def executar_docker_compose_tcp(
 
     except Exception as e:
         print(f"Erro ao executar o comando: {e}")
+
+
+def compose_down(compose_file):
+    subprocess.run(
+        ["docker", "compose", "-f", compose_file, "down", "--remove-orphans"],
+        text=True,
+        capture_output=True,
+    )
 
 
 def save_json(output_file, new_output):
@@ -90,17 +100,24 @@ def save_json(output_file, new_output):
 
 
 if __name__ == "__main__":
-    # Substitua pelos valores desejados ou configure para ler do usuário
+
+    # Faz o parse dos argumentos
+    args = get_argments()
+
+    # Chama a função principal com os argumentos
     executar_docker_compose_tcp(
-        compose_file="compose-tcp.yml",
-        service="tcp-client",
-        script="tcp-client.py",
-        host="10.5.0.2",
-        port=8080,
-        requests=10,  # Variavel
-        command="SNMPWALK",  # varivael
-        session=True,
-        log="performance.log",
-        keep=1,  # variavel
-        output_file="output.json",  # variavel
+        compose_file=args.compose_file,
+        service=args.service,
+        script=args.script,
+        host=args.host,
+        port=args.port,
+        requests=args.requests,
+        command=args.command,
+        session=args.session,
+        log=args.log,
+        keep=args.keep,
+        output_file=args.output_file,
     )
+
+    compose_down(args.compose_file)
+    print("SAINDO")

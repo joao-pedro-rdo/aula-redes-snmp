@@ -94,4 +94,5 @@ def parse_arguments():
 
 if __name__ == "__main__":
     args = parse_arguments()
+    # print(f"PORTA: {args.host}:{args.port}")
     start_udp_server(args.host, args.port)
