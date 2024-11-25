@@ -2,9 +2,14 @@ import subprocess
 import json
 import os
 from parse_argument import get_argments
+from save_csv import save_csv
+from generate_graphics import genrate_praphics
+
+# * É necessario levantar o seridor docker antes de executar o script
+# *  docker compose -f compose-server.yml run tcp-server
 
 
-def executar_docker_compose_tcp(
+def executar_docker_compose(
     compose_file,
     service,
     script,
@@ -58,7 +63,7 @@ def executar_docker_compose_tcp(
             "returncode": resultado.returncode,
         }
 
-        save_json(output_file, new_output)
+        save_csv(output_file, new_output)
 
     except Exception as e:
         print(f"Erro ao executar o comando: {e}")
@@ -72,31 +77,31 @@ def compose_down(compose_file):
     )
 
 
-def save_json(output_file, new_output):
-    # Inicializa uma lista para salvar as saídas
-    all_outputs = []
+# def save_json(output_file, new_output):
+#     # Inicializa uma lista para salvar as saídas
+#     all_outputs = []
 
-    # Carrega o JSON existente, se existir
-    if os.path.exists(output_file):
-        with open(output_file, "r") as json_file:
-            try:
-                data = json.load(json_file)
-                # Verifica se o conteúdo do JSON é uma lista
-                if isinstance(data, list):
-                    all_outputs = data
-                else:
-                    print("Arquivo JSON existente não é uma lista. Criando uma nova.")
-            except json.JSONDecodeError:
-                print("Arquivo JSON existente está corrompido. Criando uma nova lista.")
+#     # Carrega o JSON existente, se existir
+#     if os.path.exists(output_file):
+#         with open(output_file, "r") as json_file:
+#             try:
+#                 data = json.load(json_file)
+#                 # Verifica se o conteúdo do JSON é uma lista
+#                 if isinstance(data, list):
+#                     all_outputs = data
+#                 else:
+#                     print("Arquivo JSON existente não é uma lista. Criando uma nova.")
+#             except json.JSONDecodeError:
+#                 print("Arquivo JSON existente está corrompido. Criando uma nova lista.")
 
-    # Adiciona a nova saída
-    all_outputs.append(new_output)
+#     # Adiciona a nova saída
+#     all_outputs.append(new_output)
 
-    # Salva o resultado atualizado no arquivo
-    with open(output_file, "w") as json_file:
-        json.dump(all_outputs, json_file, indent=4)
+#     # Salva o resultado atualizado no arquivo
+#     with open(output_file, "w") as json_file:
+#         json.dump(all_outputs, json_file, indent=4)
 
-    print(f"Saída adicionada ao arquivo {output_file}")
+#     print(f"Saída adicionada ao arquivo {output_file}")
 
 
 if __name__ == "__main__":
@@ -105,7 +110,7 @@ if __name__ == "__main__":
     args = get_argments()
 
     # Chama a função principal com os argumentos
-    executar_docker_compose_tcp(
+    executar_docker_compose(
         compose_file=args.compose_file,
         service=args.service,
         script=args.script,
@@ -120,4 +125,4 @@ if __name__ == "__main__":
     )
 
     compose_down(args.compose_file)
-    print("SAINDO")
+    genrate_praphics(args.output_file)  # TODO: Os graficos precisam ser melhorados

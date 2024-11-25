@@ -208,5 +208,11 @@
         "stdout": "{\"tempo_de_execucao_total_ms\": 1083.441, \"tempo_medio_ms\": 0.108, \"tempo_minimo_ms\": 0.071, \"tempo_maximo_ms\": 0.335, \"desvio_padrao_ms\": 0.02}",
         "stderr": "time=\"2024-11-25T11:54:06-03:00\" level=warning msg=\"Found orphan containers ([aula-redes-snmp-tcp-server-1 aula-redes-snmp-udp-server-1]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.\"",
         "returncode": 0
+    },
+    {
+        "indentifier": "10000 SNMPWALK 0",
+        "stdout": "{\"tempo_de_execucao_total_ms\": 1112.678, \"tempo_medio_ms\": 0.111, \"tempo_minimo_ms\": 0.079, \"tempo_maximo_ms\": 1.182, \"desvio_padrao_ms\": 0.024}",
+        "stderr": "",
+        "returncode": 0
     }
 ]

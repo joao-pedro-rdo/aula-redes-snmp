@@ -75,7 +75,7 @@ def get_argments():
     parser.add_argument(
         "--output_file",
         # required=True,
-        default="output.json",
+        default="output.csv",
         help="Arquivo JSON de saída (ex: output.json)",
     )
 
