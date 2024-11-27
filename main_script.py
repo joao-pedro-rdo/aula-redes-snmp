@@ -3,7 +3,7 @@ import json
 import os
 from parse_argument import get_argments
 from save_csv import save_csv
-from generate_graphics import genrate_praphics
+from generate_graphics import generate_graphics
 
 
 # Função para executar scripts usando Docker Compose
@@ -54,9 +54,18 @@ def execute_docker_compose(
         # Executa o comando
         resultado = subprocess.run(docker_command, text=True, capture_output=True)
 
+        # Verifica se houve escrita em tela ou em arquivo
+        print_written = bool(resultado.stdout.strip())
+        file_written = os.path.exists(output_file)
+
         # Estrutura os resultados em um dicionário
         new_output = {
-            "indentifier": " ".join(["docker", str(requests), command]),
+            "execution_location": "docker",
+            "requests": requests,
+            "command": command,
+            "keep": keep,
+            "print_written": print_written,
+            "file_written": file_written,
             "stdout": resultado.stdout.strip(),
             "stderr": resultado.stderr.strip(),
             "returncode": resultado.returncode,
@@ -67,8 +76,7 @@ def execute_docker_compose(
 
     except Exception as e:
         print(f"Erro ao executar o comando Docker: {e}")
-
-    compose_down(compose_file)
+    ...
 
 
 # Função para executar scripts localmente
@@ -111,9 +119,18 @@ def execute_local(
         # Executa o comando localmente
         resultado = subprocess.run(local_command, text=True, capture_output=True)
 
+        # Verifica se houve escrita em tela ou em arquivo
+        print_written = bool(resultado.stdout.strip())
+        file_written = os.path.exists(output_file)
+
         # Estrutura os resultados em um dicionário
         new_output = {
-            "indentifier": " ".join(["local", str(requests), command]),
+            "execution_location": "local",
+            "requests": requests,
+            "command": command,
+            "keep": keep,
+            "print_written": print_written,
+            "file_written": file_written,
             "stdout": resultado.stdout.strip(),
             "stderr": resultado.stderr.strip(),
             "returncode": resultado.returncode,
@@ -169,4 +186,4 @@ if __name__ == "__main__":
             output_file=args.output_file,
         )
 
-    genrate_praphics(args.output_file)  # TODO: Melhoria nos gráficos
+    generate_graphics(args.output_file)  # TODO: Melhoria nos gráficos

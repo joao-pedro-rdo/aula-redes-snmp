@@ -22,7 +22,12 @@ def process_stdout(stdout):
 def save_csv(output_file, new_output):
     # Define os campos para o CSV
     fields = [
-        "indentifier",
+        "execution_location",
+        "requests",
+        "command",
+        "keep",
+        "print_written",
+        "file_written",
         "tempo_de_execucao_total_ms",
         "tempo_medio_ms",
         "tempo_minimo_ms",
@@ -37,7 +42,12 @@ def save_csv(output_file, new_output):
 
     # Monta os dados para a linha do CSV
     csv_row = {
-        "indentifier": new_output.get("indentifier", ""),
+        "execution_location": new_output.get("execution_location", ""),
+        "requests": new_output.get("requests", ""),
+        "command": new_output.get("command", ""),
+        "keep": new_output.get("keep", ""),
+        "print_written": new_output.get("print_written", ""),
+        "file_written": new_output.get("file_written", ""),
         "tempo_de_execucao_total_ms": metrics.get("tempo_de_execucao_total_ms", ""),
         "tempo_medio_ms": metrics.get("tempo_medio_ms", ""),
         "tempo_minimo_ms": metrics.get("tempo_minimo_ms", ""),
@@ -47,16 +57,16 @@ def save_csv(output_file, new_output):
         "returncode": new_output.get("returncode", ""),
     }
 
-    # Cria ou abre o arquivo CSV
+    # Abre ou cria o arquivo CSV
     file_exists = os.path.isfile(output_file)
     with open(output_file, mode="a", newline="", encoding="utf-8") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fields)
 
-        # Escreve o cabeçalho se o arquivo não existir
+        # Escreve o cabeçalho apenas na primeira vez
         if not file_exists:
             writer.writeheader()
 
-        # Adiciona a nova linha com os dados extraídos
+        # Adiciona a nova linha com os dados
         writer.writerow(csv_row)
 
     print(f"Saída adicionada ao arquivo {output_file}")
