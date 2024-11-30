@@ -20,6 +20,9 @@ def process_stdout(stdout):
 
 
 def save_csv(output_file, new_output):
+    """
+    Salva os dados de saída em um arquivo CSV, com organização baseada em `execution_location`.
+    """
     # Define os campos para o CSV
     fields = [
         "execution_location",
@@ -57,9 +60,21 @@ def save_csv(output_file, new_output):
         "returncode": new_output.get("returncode", ""),
     }
 
+    # Criar o nome do arquivo dinamicamente
+    folder = (
+        "metricas/linux"
+        if new_output["execution_location"] == "docker"
+        else "metricas/windows"
+    )
+    file_name = f"{new_output['execution_location']}_{new_output['requests']}_{new_output['command']}_{new_output['keep']}.csv"
+    output_path = os.path.join(folder, file_name)
+
+    # Garante que o diretório existe
+    os.makedirs(folder, exist_ok=True)
+
     # Abre ou cria o arquivo CSV
-    file_exists = os.path.isfile(output_file)
-    with open(output_file, mode="a", newline="", encoding="utf-8") as csvfile:
+    file_exists = os.path.isfile(output_path)
+    with open(output_path, mode="a", newline="", encoding="utf-8") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fields)
 
         # Escreve o cabeçalho apenas na primeira vez
@@ -69,4 +84,4 @@ def save_csv(output_file, new_output):
         # Adiciona a nova linha com os dados
         writer.writerow(csv_row)
 
-    print(f"Saída adicionada ao arquivo {output_file}")
+    print(f"Saída adicionada ao arquivo {output_path}")
