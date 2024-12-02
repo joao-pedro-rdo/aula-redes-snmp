@@ -1,7 +1,0 @@
-execution_location,requests,command,keep,print_written,file_written,tempo_de_execucao_total_ms,tempo_medio_ms,tempo_minimo_ms,tempo_maximo_ms,desvio_padrao_ms,stderr,returncode
-local,10000,INFO,1,True,True,537.634,0.054,0.043,1.333,0.02,,0
-local,10000,INFO,1,True,True,527.758,0.053,0.044,2.603,0.027,,0
-local,10000,INFO,1,True,True,654.317,0.065,0.043,0.659,0.021,,0
-local,10000,INFO,1,True,True,717.916,0.072,0.044,1.897,0.048,,0
-local,10000,INFO,1,True,True,601.425,0.06,0.044,3.21,0.04,,0
-local,10000,INFO,1,True,True,652.047,0.065,0.043,2.5,0.043,,0

@@ -64,7 +64,7 @@ def execute_requests(host, port, num_requests, session, verbose, command, keep):
             sock = create_connection(host, port, session) if session else None
             if sock:
                 response = send_request(sock, command)  # Envia o comando especificado
-                if verbose:
+                if verbose == True:
                     print(f"resposta: {response}")
                 times.append(
                     time.time() - start_time
@@ -136,7 +136,12 @@ def parse_arguments():
     parser.add_argument(
         "--session", action="store_true", help="Usar sessão persistente"
     )
-    parser.add_argument("--verbose", action="store_true", help="Imprimir respostas")
+    parser.add_argument(
+        "--verbose",
+        action="store_true",  # Trata como flag booleana
+        default=False,
+        help="Habilita ou desabilita o modo verbose",
+    )
     parser.add_argument(
         "--log", type=str, help="Arquivo de log para resultados de performance"
     )

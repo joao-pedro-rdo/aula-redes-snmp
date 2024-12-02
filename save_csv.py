@@ -2,26 +2,29 @@ import csv
 import json
 import os
 
+AMBIENTE = "windows"
+
 
 def process_stdout(stdout):
     """
     Processa a string stdout para extrair os valores das métricas em formato JSON.
     """
     try:
-        # Tenta localizar e carregar o JSON presente no stdout
-        if "{" in stdout and "}" in stdout:
-            start_index = stdout.index("{")
-            json_data = json.loads(stdout[start_index:])
-            return json_data
-        else:
-            return {}
+        # Filtra apenas a linha contendo JSON
+        json_lines = [
+            line for line in stdout.splitlines() if line.strip().startswith("{")
+        ]
+        if json_lines:
+            return json.loads(json_lines[0])  # Carrega o primeiro JSON encontrado
+        print(stdout)
+        return {}
     except (ValueError, json.JSONDecodeError):
         return {}
 
 
-def save_csv(output_file, new_output):
+def save_csv(new_output):
     """
-    Salva os dados de saída em um arquivo CSV, com organização baseada em `execution_location`.
+    Salva os dados de saída em um arquivo CSV
     """
     # Define os campos para o CSV
     fields = [
@@ -31,6 +34,7 @@ def save_csv(output_file, new_output):
         "keep",
         "print_written",
         "file_written",
+        "verbose",  # Adicionado aqui
         "tempo_de_execucao_total_ms",
         "tempo_medio_ms",
         "tempo_minimo_ms",
@@ -49,7 +53,7 @@ def save_csv(output_file, new_output):
         "requests": new_output.get("requests", ""),
         "command": new_output.get("command", ""),
         "keep": new_output.get("keep", ""),
-        "print_written": new_output.get("print_written", ""),
+        "verbose": new_output.get("verbose", ""),
         "file_written": new_output.get("file_written", ""),
         "tempo_de_execucao_total_ms": metrics.get("tempo_de_execucao_total_ms", ""),
         "tempo_medio_ms": metrics.get("tempo_medio_ms", ""),
@@ -61,12 +65,8 @@ def save_csv(output_file, new_output):
     }
 
     # Criar o nome do arquivo dinamicamente
-    folder = (
-        "metricas/linux"
-        if new_output["execution_location"] == "docker"
-        else "metricas/windows"
-    )
-    file_name = f"{new_output['execution_location']}_{new_output['requests']}_{new_output['command']}_{new_output['keep']}.csv"
+    folder = "metricas/linux" if AMBIENTE == "linux" else "metricas/windows"
+    file_name = f"{AMBIENTE}_{new_output['execution_location']}_{new_output['requests']}_{new_output['command']}_{new_output['keep']}_verbose:{str(new_output['verbose'])}.csv"
     output_path = os.path.join(folder, file_name)
 
     # Garante que o diretório existe

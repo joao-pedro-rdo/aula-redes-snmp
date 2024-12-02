@@ -1,0 +1,2 @@
+execution_location,requests,command,keep,print_written,file_written,verbose,tempo_de_execucao_total_ms,tempo_medio_ms,tempo_minimo_ms,tempo_maximo_ms,desvio_padrao_ms,stderr,returncode
+local,10,INFO,0,,,True,0.863,0.086,0.057,0.154,0.034,,0

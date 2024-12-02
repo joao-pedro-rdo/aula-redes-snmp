@@ -68,7 +68,10 @@ def get_argments():
     )
     parser.add_argument(
         "--verbose",
-        help="Flag de manter conexões (0 - mantem a conexao ou 1 - fecha conexão a cada chamada)",
+        type=lambda x: str(x).lower()
+        == "true",  # Converte strings como "true"/"false" para booleano
+        default=False,  # Define o padrão como False
+        help="Habilita ou desabilita o modo verbose. Use True ou False.",
     )
     parser.add_argument(
         "--keep",

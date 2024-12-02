@@ -54,18 +54,13 @@ def execute_docker_compose(
         # Executa o comando
         resultado = subprocess.run(docker_command, text=True, capture_output=True)
 
-        # Verifica se houve escrita em tela ou em arquivo
-        print_written = bool(resultado.stdout.strip())
-        file_written = os.path.exists(output_file)
-
         # Estrutura os resultados em um dicionário
         new_output = {
-            "execution_location": "docker",
+            "execution_location": "local",
             "requests": requests,
             "command": command,
             "keep": keep,
-            "print_written": print_written,
-            "file_written": file_written,
+            "verbose": verbose,  # Adicione o flag verbose
             "stdout": resultado.stdout.strip(),
             "stderr": resultado.stderr.strip(),
             "returncode": resultado.returncode,
@@ -90,7 +85,6 @@ def execute_local(
     log,
     verbose,
     keep,
-    output_file,
 ):
     # Monta o comando dinamicamente
     local_command = [
@@ -119,24 +113,19 @@ def execute_local(
         # Executa o comando localmente
         resultado = subprocess.run(local_command, text=True, capture_output=True)
 
-        # Verifica se houve escrita em tela ou em arquivo
-        print_written = bool(resultado.stdout.strip())
-        file_written = os.path.exists(output_file)
-
         # Estrutura os resultados em um dicionário
         new_output = {
             "execution_location": "local",
             "requests": requests,
             "command": command,
             "keep": keep,
-            "print_written": print_written,
-            "file_written": file_written,
+            "verbose": verbose,  # Adicione o flag verbose
             "stdout": resultado.stdout.strip(),
             "stderr": resultado.stderr.strip(),
             "returncode": resultado.returncode,
         }
 
-        save_csv(output_file, new_output)
+        save_csv(new_output)
         print(new_output)
 
     except Exception as e:
@@ -170,7 +159,6 @@ if __name__ == "__main__":
             log=args.log,
             verbose=args.verbose,
             keep=args.keep,
-            output_file=args.output_file,
         )
     else:  # Caso contrário, executa localmente
         execute_local(
@@ -183,7 +171,6 @@ if __name__ == "__main__":
             log=args.log,
             verbose=args.verbose,
             keep=args.keep,
-            output_file=args.output_file,
         )
 
-    generate_graphics(args.output_file)  # TODO: Melhoria nos gráficos
+    # generate_graphics(args.output_file)  # TODO: Melhoria nos gráficos
