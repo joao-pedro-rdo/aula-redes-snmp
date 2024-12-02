@@ -1,0 +1,2 @@
+execution_location,requests,command,keep,print_written,file_written,verbose,tempo_de_execucao_total_ms,tempo_medio_ms,tempo_minimo_ms,tempo_maximo_ms,desvio_padrao_ms,stderr,returncode
+docker,10,INFO,1,,,False,0.801,0.08,0.072,0.125,0.017,,0

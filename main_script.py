@@ -19,7 +19,6 @@ def execute_docker_compose(
     log,
     verbose,
     keep,
-    output_file,
 ):
     # Monta o comando dinamicamente
     docker_command = [
@@ -56,7 +55,7 @@ def execute_docker_compose(
 
         # Estrutura os resultados em um dicionário
         new_output = {
-            "execution_location": "local",
+            "execution_location": "docker",
             "requests": requests,
             "command": command,
             "keep": keep,
@@ -66,8 +65,9 @@ def execute_docker_compose(
             "returncode": resultado.returncode,
         }
 
-        save_csv(output_file, new_output)
+        save_csv(new_output)
         print(new_output)
+        compose_down(compose_file)
 
     except Exception as e:
         print(f"Erro ao executar o comando Docker: {e}")
