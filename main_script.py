@@ -3,7 +3,6 @@ import json
 import os
 from parse_argument import get_argments
 from save_csv import save_csv
-from generate_graphics import generate_graphics
 
 
 # Função para executar scripts usando Docker Compose
@@ -15,10 +14,9 @@ def execute_docker_compose(
     port,
     requests,
     command,
-    session,
-    log,
     verbose,
     keep,
+    write_to_file,
 ):
     # Monta o comando dinamicamente
     docker_command = [
@@ -38,12 +36,11 @@ def execute_docker_compose(
         str(requests),
         "--command",
         command,
-        "--session" if session and script != "udp-client.py" else "",
-        "--log",
-        log,
         "--verbose" if verbose else "",
-        "--keep",
+        "--keep" if script != "udp-client.py" else "",
         str(keep) if script != "udp-client.py" else "",
+        "--write_to_file",
+        str(write_to_file),
     ]
 
     # Remove argumentos vazios
@@ -60,6 +57,7 @@ def execute_docker_compose(
             "command": command,
             "keep": keep,
             "verbose": verbose,  # Adicione o flag verbose
+            "write_to_file": write_to_file,
             "stdout": resultado.stdout.strip(),
             "stderr": resultado.stderr.strip(),
             "returncode": resultado.returncode,
@@ -81,10 +79,9 @@ def execute_local(
     port,
     requests,
     command,
-    session,
-    log,
     verbose,
     keep,
+    write_to_file,
 ):
     # Monta o comando dinamicamente
     local_command = [
@@ -99,11 +96,10 @@ def execute_local(
         "--command",
         command,
         "--verbose" if verbose else "",
-        "--log",
-        log,
-        "--keep",
+        "--keep" if script != "udp-client.py" else "",
         str(keep) if script != "udp-client.py" else "",
-        "--session" if session and script != "udp-client.py" else "",
+        "--write_to_file",
+        str(write_to_file),
     ]
 
     # Remove argumentos vazios
@@ -120,6 +116,8 @@ def execute_local(
             "command": command,
             "keep": keep,
             "verbose": verbose,  # Adicione o flag verbose
+            "write_to_file": write_to_file,
+            "write_to_file": write_to_file,
             "stdout": resultado.stdout.strip(),
             "stderr": resultado.stderr.strip(),
             "returncode": resultado.returncode,
@@ -155,10 +153,9 @@ if __name__ == "__main__":
             port=args.port,
             requests=args.requests,
             command=args.command,
-            session=args.session,
-            log=args.log,
             verbose=args.verbose,
             keep=args.keep,
+            write_to_file=args.write_to_file,
         )
     else:  # Caso contrário, executa localmente
         execute_local(
@@ -167,10 +164,7 @@ if __name__ == "__main__":
             port=args.port,
             requests=args.requests,
             command=args.command,
-            session=args.session,
-            log=args.log,
             verbose=args.verbose,
             keep=args.keep,
+            write_to_file=args.write_to_file,
         )
-
-    # generate_graphics(args.output_file)  # TODO: Melhoria nos gráficos

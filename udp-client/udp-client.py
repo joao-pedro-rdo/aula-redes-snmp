@@ -3,6 +3,9 @@ import time
 import argparse
 import json
 import statistics
+import os
+
+ARQUIVO_ESCRITA = "output.txt"
 
 
 # Função para enviar uma requisição e receber a resposta
@@ -12,8 +15,21 @@ def send_request(sock, server_address, request):
     return response.decode()
 
 
+def print_to_file(response):
+    with open(ARQUIVO_ESCRITA, "a") as file:
+        file.write(response)
+
+
+def del_file():
+    if os.path.exists(ARQUIVO_ESCRITA):  # Verifica se o arquivo existe
+        os.remove(ARQUIVO_ESCRITA)  # Remove o arquivo
+        print(f"Arquivo {ARQUIVO_ESCRITA} excluído com sucesso.")
+    else:
+        print(f"Arquivo {ARQUIVO_ESCRITA} não encontrado.")
+
+
 # Função para executar múltiplas requisições ao servidor
-def execute_requests(host, port, num_requests, verbose, command):
+def execute_requests(host, port, num_requests, verbose, command, write_to_file):
     times = []
     server_address = (host, port)
     command = " ".join(command)
@@ -22,19 +38,20 @@ def execute_requests(host, port, num_requests, verbose, command):
     for _ in range(num_requests):
         start_time = time.time()  # Marca o tempo de início
         response = send_request(sock, server_address, command)  # Envia a requisição
-        elapsed_time = time.time() - start_time  # Calcula o tempo de resposta
-        times.append(elapsed_time)  # Adiciona o tempo à lista
-        if verbose:
-            print(
-                f"Response: {response}"
-            )  # Exibe a resposta se `verbose` estiver ativado
+
+        if verbose == True:
+            print(f"resposta: {response}")
+        if write_to_file == 1:
+            print_to_file(response)
+
+        times.append(time.time() - start_time)
 
     sock.close()
     return times
 
 
 # Função para calcular estatísticas de desempenho
-def log_performance(times, log_file=None):
+def log_performance(times):
     if not times or not all(isinstance(t, (int, float)) for t in times):
         print("Invalid or empty times list provided.")  # Lista vazia ou inválida
         return {}
@@ -52,15 +69,6 @@ def log_performance(times, log_file=None):
             statistics.stdev(times_ms) if len(times_ms) > 1 else 0, 3
         ),
     }
-
-    # Salva as estatísticas em um arquivo, se especificado
-    if log_file:
-        try:
-            with open(log_file, "w") as file:
-                file.write(str(stats))
-        except Exception as e:
-            print(f"Failed to write to log file: {e}")
-
     return stats
 
 
@@ -74,20 +82,33 @@ def parse_arguments():
     parser.add_argument(
         "--requests", type=int, default=10, help="Número de requisições"
     )
-    parser.add_argument("--verbose", action="store_true", help="Imprimir respostas")
-    parser.add_argument("--log", type=str, help="Arquivo de log para resultados")
+    parser.add_argument(
+        "--verbose",
+        action="store_true",  # Trata como flag booleana
+        default=False,
+        help="Habilita ou desabilita o modo verbose",
+    )
     parser.add_argument(
         "--command", type=str, nargs="+", default="INFO", help="Comando a ser enviado"
     )
-    parser.add_argument("--keep")
-    parser.add_argument("--session")
+    # Para escrever ou nao os prints em um arquivo
+    parser.add_argument("--write_to_file", default=0, type=int)
+    # recebe keep mas nao faz nada
+
+    parser.add_argument("--keep", default=0, type=int)
+
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_arguments()
     times = execute_requests(
-        args.host, args.port, args.requests, args.verbose, args.command
+        args.host,
+        args.port,
+        args.requests,
+        args.verbose,
+        args.command,
+        args.write_to_file,
     )
-    stats = log_performance(times, args.log)
+    stats = log_performance(times)
     print(json.dumps(stats))

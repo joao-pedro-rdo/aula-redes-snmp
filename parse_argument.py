@@ -54,19 +54,6 @@ def get_argments():
         help="Comando a ser executado (ex: SNMPWALK)",
     )
     parser.add_argument(
-        "--session",
-        action="store_true",
-        default="session",
-        help="Habilita flag de sessão",
-    )
-    parser.add_argument(
-        "--log",
-        # required=True,
-        default="performace.log",
-        type=str,
-        help="Arquivo de log (ex: performance.log)",
-    )
-    parser.add_argument(
         "--verbose",
         type=lambda x: str(x).lower()
         == "true",  # Converte strings como "true"/"false" para booleano
@@ -80,10 +67,11 @@ def get_argments():
         help="Flag de manter conexões (0 - mantem a conexao ou 1 - fecha conexão a cada chamada)",
     )
     parser.add_argument(
-        "--output_file",
+        "--write_to_file",
         # required=True,
-        default="output.csv",
-        help="Arquivo JSON de saída (ex: output.json)",
+        default=0,
+        type=int,
+        help="Flag para escrever ou não os resultados em um arquivo (0 - não escreve ou 1 - escreve)",
     )
 
     return parser.parse_args()

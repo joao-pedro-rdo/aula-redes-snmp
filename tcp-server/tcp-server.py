@@ -97,7 +97,7 @@ def start_tcp_server(host, port):
     server_socket.bind((host, port))
 
     # Coloca o servidor em modo de escuta, pronto para aceitar conexões
-    server_socket.listen(5)
+    server_socket.listen(1024)
     print(f"TCP Server is listening on {host}:{port}")
 
     try:
