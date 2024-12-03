@@ -29,10 +29,11 @@ def save_csv(new_output):
     # Define os campos para o CSV
     fields = [
         "execution_location",
+        "protocol",  # Adicionado campo para identificar o protocolo
         "requests",
         "command",
         "keep",
-        "verbose",  # Adicionado aqui
+        "verbose",
         "write_to_file",
         "tempo_de_execucao_total_ms",
         "tempo_medio_ms",
@@ -49,6 +50,7 @@ def save_csv(new_output):
     # Monta os dados para a linha do CSV
     csv_row = {
         "execution_location": new_output.get("execution_location", ""),
+        "protocol": new_output.get("protocol", ""),  # Adicionado protocolo
         "requests": new_output.get("requests", ""),
         "command": new_output.get("command", ""),
         "keep": new_output.get("keep", ""),
@@ -65,7 +67,7 @@ def save_csv(new_output):
 
     # Criar o nome do arquivo dinamicamente
     folder = "metricas/linux" if AMBIENTE == "linux" else "metricas/windows"
-    file_name = f"{AMBIENTE}_{new_output['execution_location']}_{new_output['requests']}_{new_output['command']}_{new_output['keep']}_verbose:{str(new_output['verbose'])}_write_file:{str(new_output['write_to_file'])}.csv"
+    file_name = f"{AMBIENTE}_{new_output['execution_location']}_{new_output['protocol']}_{new_output['requests']}_{new_output['command']}_{new_output['keep']}_verbose:{str(new_output['verbose'])}_write_file:{str(new_output['write_to_file'])}.csv"
     output_path = os.path.join(folder, file_name)
 
     # Garante que o diretório existe

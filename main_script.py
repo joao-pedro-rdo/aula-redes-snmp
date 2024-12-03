@@ -5,6 +5,16 @@ from parse_argument import get_argments
 from save_csv import save_csv
 
 
+# Função para identificar o protocolo com base no nome do script
+def infer_protocol(script_name):
+    if "tcp" in script_name.lower():
+        return "TCP"
+    elif "udp" in script_name.lower():
+        return "UDP"
+    else:
+        return "UNKNOWN"  # Valor padrão caso não seja TCP ou UDP
+
+
 # Função para executar scripts usando Docker Compose
 def execute_docker_compose(
     compose_file,
@@ -18,6 +28,9 @@ def execute_docker_compose(
     keep,
     write_to_file,
 ):
+    # Identifica o protocolo com base no script
+    protocol = infer_protocol(script)
+
     # Monta o comando dinamicamente
     docker_command = [
         "docker",
@@ -53,10 +66,11 @@ def execute_docker_compose(
         # Estrutura os resultados em um dicionário
         new_output = {
             "execution_location": "docker",
+            "protocol": protocol,  # Adiciona o protocolo
             "requests": requests,
             "command": command,
             "keep": keep,
-            "verbose": verbose,  # Adicione o flag verbose
+            "verbose": verbose,
             "write_to_file": write_to_file,
             "stdout": resultado.stdout.strip(),
             "stderr": resultado.stderr.strip(),
@@ -69,7 +83,6 @@ def execute_docker_compose(
 
     except Exception as e:
         print(f"Erro ao executar o comando Docker: {e}")
-    ...
 
 
 # Função para executar scripts localmente
@@ -83,6 +96,9 @@ def execute_local(
     keep,
     write_to_file,
 ):
+    # Identifica o protocolo com base no script
+    protocol = infer_protocol(script)
+
     # Monta o comando dinamicamente
     local_command = [
         "python3",
@@ -112,11 +128,11 @@ def execute_local(
         # Estrutura os resultados em um dicionário
         new_output = {
             "execution_location": "local",
+            "protocol": protocol,  # Adiciona o protocolo
             "requests": requests,
             "command": command,
             "keep": keep,
-            "verbose": verbose,  # Adicione o flag verbose
-            "write_to_file": write_to_file,
+            "verbose": verbose,
             "write_to_file": write_to_file,
             "stdout": resultado.stdout.strip(),
             "stderr": resultado.stderr.strip(),
