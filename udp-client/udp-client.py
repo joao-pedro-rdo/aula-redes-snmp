@@ -29,7 +29,7 @@ def del_file():
 
 
 # Função para executar múltiplas requisições ao servidor
-def execute_requests(host, port, num_requests, verbose, command, write_to_file):
+def execute_requests(host, port, num_requests, print_to_screen, command, write_to_file):
     times = []
     server_address = (host, port)
     command = " ".join(command)
@@ -39,7 +39,7 @@ def execute_requests(host, port, num_requests, verbose, command, write_to_file):
         start_time = time.time()  # Marca o tempo de início
         response = send_request(sock, server_address, command)  # Envia a requisição
 
-        if verbose == True:
+        if print_to_screen == True:
             print(f"resposta: {response}")
         if write_to_file == 1:
             print_to_file(response)
@@ -83,19 +83,19 @@ def parse_arguments():
         "--requests", type=int, default=10, help="Número de requisições"
     )
     parser.add_argument(
-        "--verbose",
+        "--print_to_screen",
         action="store_true",  # Trata como flag booleana
         default=False,
-        help="Habilita ou desabilita o modo verbose",
+        help="Habilita ou desabilita o modo print_to_screen",
     )
     parser.add_argument(
         "--command", type=str, nargs="+", default="INFO", help="Comando a ser enviado"
     )
     # Para escrever ou nao os prints em um arquivo
     parser.add_argument("--write_to_file", default=0, type=int)
-    # recebe keep mas nao faz nada
+    # recebe session mas nao faz nada
 
-    parser.add_argument("--keep", default=0, type=int)
+    parser.add_argument("--session", default=0, type=int)
 
     return parser.parse_args()
 
@@ -106,7 +106,7 @@ if __name__ == "__main__":
         args.host,
         args.port,
         args.requests,
-        args.verbose,
+        args.print_to_screen,
         args.command,
         args.write_to_file,
     )

@@ -48,17 +48,19 @@ def del_file():
 
 
 # Função para executar múltiplas requisições ao servidor
-def execute_requests(host, port, num_requests, verbose, command, keep, write_to_file):
+def execute_requests(
+    host, port, num_requests, print_to_screen, command, session, write_to_file
+):
 
     times = []  # Lista para armazenar os tempos de resposta
     command = " ".join(command)
-    if keep == 0:
+    if session == 0:
         sock = create_connection(host, port)
         for _ in range(num_requests):
             start_time = time.time()  # Marca o tempo de início
             if sock:
                 response = send_request(sock, command)  # Envia o comando especificado
-                if verbose == True:
+                if print_to_screen == True:
                     print(f"resposta: {response}")
                 if write_to_file == 1:
                     print_to_file(response)
@@ -67,13 +69,13 @@ def execute_requests(host, port, num_requests, verbose, command, keep, write_to_
         close_connection(sock)  # Fecha a conexão se a sessão for persistente
         del_file()
         return times  # Retorna a lista de tempos de resposta
-    elif keep == 1:
+    elif session == 1:
         for _ in range(num_requests):
             start_time = time.time()
             sock = create_connection(host, port)
             if sock:
                 response = send_request(sock, command)  # Envia o comando especificado
-                if verbose == True:
+                if print_to_screen == True:
                     print(f"resposta: {response}")
                 if write_to_file == 1:
                     print_to_file(response)
@@ -124,10 +126,10 @@ def parse_arguments():
         "--requests", type=int, default=10, help="Número de requisições"
     )
     parser.add_argument(
-        "--verbose",
+        "--print_to_screen",
         action="store_true",  # Trata como flag booleana
         default=False,
-        help="Habilita ou desabilita o modo verbose",
+        help="Habilita ou desabilita o modo print_to_screen",
     )
 
     parser.add_argument(
@@ -138,7 +140,7 @@ def parse_arguments():
         help="Comando a ser enviado ao servidor",
     )
     # Para manter ou nao a seção da conexão
-    parser.add_argument("--keep", default=0, type=int)
+    parser.add_argument("--session", default=0, type=int)
 
     # Para escrever ou nao os prints em um arquivo
     parser.add_argument("--write_to_file", default=0, type=int)
@@ -153,9 +155,9 @@ if __name__ == "__main__":
         args.host,
         args.port,
         args.requests,
-        args.verbose,
+        args.print_to_screen,
         args.command,
-        args.keep,
+        args.session,
         args.write_to_file,
     )  # Executa as requisições
     stats = log_performance(times)  # Registra o tempo total de execução

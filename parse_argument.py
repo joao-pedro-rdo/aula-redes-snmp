@@ -54,14 +54,14 @@ def get_argments():
         help="Comando a ser executado (ex: SNMPWALK)",
     )
     parser.add_argument(
-        "--verbose",
+        "--print_to_screen",
         type=lambda x: str(x).lower()
         == "true",  # Converte strings como "true"/"false" para booleano
         default=False,  # Define o padrão como False
-        help="Habilita ou desabilita o modo verbose. Use True ou False.",
+        help="Habilita ou desabilita o modo print. Use True ou False.",
     )
     parser.add_argument(
-        "--keep",
+        "--session",
         required=True,
         type=int,
         help="Flag de manter conexões (0 - mantem a conexao ou 1 - fecha conexão a cada chamada)",

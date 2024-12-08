@@ -2,8 +2,8 @@ services:
   tcp-client:
     build:
       context: ./tcp-client
-    # Para xibir qual conexão está sendo feita no momento usar --verbose
-    command: ["python", "tcp-client.py", "--host", "0.0.0.0", "--port", "8080", "--requests", "1000","--command", "SNMPWALK",  "--keep","1"]
+    # Para xibir qual conexão está sendo feita no momento usar --print_to_screen
+    command: ["python", "tcp-client.py", "--host", "0.0.0.0", "--port", "8080", "--requests", "1000","--command", "SNMPWALK",  "--session","1"]
     networks:
       aula-redes-snmp_my-network:
         ipv4_address: 10.5.0.3

@@ -24,8 +24,8 @@ def execute_docker_compose(
     port,
     requests,
     command,
-    verbose,
-    keep,
+    print_to_screen,
+    session,
     write_to_file,
 ):
     # Identifica o protocolo com base no script
@@ -49,9 +49,9 @@ def execute_docker_compose(
         str(requests),
         "--command",
         command,
-        "--verbose" if verbose else "",
-        "--keep" if script != "udp-client.py" else "",
-        str(keep) if script != "udp-client.py" else "",
+        "--print_to_screen" if print_to_screen else "",
+        "--session" if script != "udp-client.py" else "",
+        str(session) if script != "udp-client.py" else "",
         "--write_to_file",
         str(write_to_file),
     ]
@@ -69,8 +69,8 @@ def execute_docker_compose(
             "protocol": protocol,  # Adiciona o protocolo
             "requests": requests,
             "command": command,
-            "keep": keep,
-            "verbose": verbose,
+            "session": session,
+            "print_to_screen": print_to_screen,
             "write_to_file": write_to_file,
             "stdout": resultado.stdout.strip(),
             "stderr": resultado.stderr.strip(),
@@ -92,8 +92,8 @@ def execute_local(
     port,
     requests,
     command,
-    verbose,
-    keep,
+    print_to_screen,
+    session,
     write_to_file,
 ):
     # Identifica o protocolo com base no script
@@ -111,9 +111,9 @@ def execute_local(
         str(requests),
         "--command",
         command,
-        "--verbose" if verbose else "",
-        "--keep" if script != "udp-client.py" else "",
-        str(keep) if script != "udp-client.py" else "",
+        "--print_to_screen" if print_to_screen else "",
+        "--session" if script != "udp-client.py" else "",
+        str(session) if script != "udp-client.py" else "",
         "--write_to_file",
         str(write_to_file),
     ]
@@ -131,8 +131,8 @@ def execute_local(
             "protocol": protocol,  # Adiciona o protocolo
             "requests": requests,
             "command": command,
-            "keep": keep,
-            "verbose": verbose,
+            "session": session,
+            "print_to_screen": print_to_screen,
             "write_to_file": write_to_file,
             "stdout": resultado.stdout.strip(),
             "stderr": resultado.stderr.strip(),
@@ -169,8 +169,8 @@ if __name__ == "__main__":
             port=args.port,
             requests=args.requests,
             command=args.command,
-            verbose=args.verbose,
-            keep=args.keep,
+            print_to_screen=args.print_to_screen,
+            session=args.session,
             write_to_file=args.write_to_file,
         )
     else:  # Caso contrário, executa localmente
@@ -180,7 +180,7 @@ if __name__ == "__main__":
             port=args.port,
             requests=args.requests,
             command=args.command,
-            verbose=args.verbose,
-            keep=args.keep,
+            print_to_screen=args.print_to_screen,
+            session=args.session,
             write_to_file=args.write_to_file,
         )

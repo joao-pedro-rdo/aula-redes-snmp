@@ -1,0 +1,4 @@
+execution_location,protocol,requests,command,session,print_to_screen,write_to_file,tempo_de_execucao_total_ms,tempo_medio_ms,tempo_minimo_ms,tempo_maximo_ms,desvio_padrao_ms,stderr,returncode
+local,TCP,15000,INFO,1,False,1,1638.832,0.109,0.087,8.226,0.069,,0
+local,TCP,15000,INFO,1,False,1,1636.528,0.109,0.081,8.311,0.069,,0
+local,TCP,15000,INFO,1,False,1,1639.138,0.109,0.077,0.504,0.02,,0
